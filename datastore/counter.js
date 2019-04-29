@@ -36,12 +36,45 @@ const writeCounter = (count, callback) => {
   });
 };
 
+
+
 // Public API - Fix this function //////////////////////////////////////////////
 
-exports.getNextUniqueId = () => {
-  counter = counter + 1;
-  return zeroPaddedNumber(counter);
+// exports.getNextUniqueId = () => {
+//   counter = counter + 1;
+//   console.log(counter)
+//   return zeroPaddedNumber(counter);
+// };
+
+exports.getNextUniqueId = (callback) => {
+  readCounter(function(err, data){
+    counter = data;
+    counter++;
+    writeCounter(counter, (err, num) => {
+      callback(err, num);
+    })
+  });
+  return zeroPaddedNumber(counter)
+
+
+
+  //readCounter first
+    //passes in the callback
+    //if fail, throw error
+    //if pass, assign var to the counter number
+
+    // readCounter(error, data) {
+    //   if (error) {
+    //     callback(error);
+    //   } else {
+    //     data++
+    //     writeCounter()
+    //   }
+    // }
+
 };
+
+
 
 
 
